@@ -4,7 +4,7 @@ class Board
   attr_reader :length, :num_of_bomb, :grid
 
   def initialize(num_of_bomb)
-    @length = 3
+    @length = 9
     @grid = Array.new(length) { Array.new(length) }
     @num_of_bomb = num_of_bomb
     populate
@@ -14,7 +14,7 @@ class Board
     bomb_array = random_bomb
     grid.each_with_index do |row, i|
       row.each_with_index do |tile, j|
-        grid[i][j] = Tile.new(bomb_array.pop)
+        grid[i][j] = Tile.new(self, bomb_array.pop)
       end
     end
   end
