@@ -12,12 +12,18 @@ class MinesweeperGame
   def game_turn
     board.render
     act, pos = get_user_input
-    p act
-    p pos
+    case act
+    when "f"
+      board.flag(pos)
+    when "r"
+      board.reveal(pos)
+    end
   end
 
   def run
-    game_turn
+    loop do
+      game_turn
+    end
   end
 
   def get_user_input

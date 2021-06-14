@@ -44,14 +44,39 @@ class Board
   end
 
   def render_tile(tile)
-    if tile.revealed == false
-      "*"
-    elsif tile.flagged == true
+    if tile.flagged == true
       "F"
+    elsif tile.revealed == false
+      "*"
     elsif tile.bombed == false
-      "_"
+      tile.neighbors_bomb_count
     else
       "!"
     end
+  end
+
+  def reveal(pos)
+    x, y = pos
+    if grid[x][y].flagged == true
+      puts "the position is flagged, please unflag before reveal"
+    elsif grid[x][y].revealed == true
+      puts "the position is already revealed"
+      return true
+    elsif grid[x][y].reveal == false
+      puts "LOSE TODO"
+      return false
+    end
+    true
+  end
+
+  def flag(pos)
+    x, y = pos
+    if grid[x][y].revealed == true
+      puts "the position is already revealed"
+      return true
+    else
+      grid[x][y].flag
+    end
+    true
   end
 end
