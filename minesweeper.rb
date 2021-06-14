@@ -1,12 +1,11 @@
 require_relative "./board.rb"
-require "byebug"
 
 class MinesweeperGame
 
   attr_reader :board
 
-  def initialize
-    @board = Board.new(3)
+  def initialize(num_of_bomb)
+    @board = Board.new(num_of_bomb)
   end
 
   def game_turn
@@ -21,9 +20,39 @@ class MinesweeperGame
   end
 
   def run
-    loop do
+    until game_end
       game_turn
+      if win?
+        puts "you win!"
+        break
+      end
+      if lose?
+        puts "you lose"
+        break
+      end
     end
+  end
+
+  def game_end
+    win? || lose?
+  end
+
+  def win?
+    all_bomb_tile.all? { |ele| ele.revealed == true }
+  end
+
+  def lose?
+    all_bomb_tile.any? { |ele| ele.revealed == true }
+  end
+
+  def all_bomb_tile
+    all_bomb_tile = []
+    @board.grid.each do |row|
+      row.each do |ele|
+        all_bomb_tile << ele if ele.bombed == true
+      end
+    end
+    all_bomb_tile
   end
 
   def get_user_input
@@ -76,6 +105,3 @@ class MinesweeperGame
     pos.none? { |ele| alphabet.include?(ele) }
   end
 end
-
-game = MinesweeperGame.new
-game.run

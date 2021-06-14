@@ -5,6 +5,7 @@ class Board
 
   def initialize(num_of_bomb)
     @length = 9
+    raise ("too many bomb") if num_of_bomb > length ** 2
     @grid = Array.new(length) { Array.new(length) }
     @num_of_bomb = num_of_bomb
     populate
@@ -49,6 +50,7 @@ class Board
     elsif tile.revealed == false
       "*"
     elsif tile.bombed == false
+      return "_" if tile.neighbors_bomb_count == 0
       tile.neighbors_bomb_count
     else
       "!"
@@ -63,7 +65,6 @@ class Board
       puts "the position is already revealed"
       return true
     elsif grid[x][y].reveal == false
-      puts "LOSE TODO"
       return false
     end
     true

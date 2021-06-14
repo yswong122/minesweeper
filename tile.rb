@@ -6,12 +6,17 @@ class Tile
     @grid = board.grid
     @bombed = bombed
     @flagged = false
-    @revealed = true
+    @revealed = false
   end
 
   def reveal
     @revealed = true
     return false if bombed == true
+    self.neighbors.each do |tile|
+      if tile.neighbors_bomb_count == 0 && tile.revealed == false
+        tile.reveal
+      end
+    end
     true
   end
   
@@ -43,7 +48,6 @@ class Tile
 
   def neighbors_bomb_count
     count = neighbors.count { |tile| tile.bombed == true }
-    return "_" if count == 0
     count
   end
 
