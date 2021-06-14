@@ -13,7 +13,7 @@ class Tile
     @revealed = true
     return false if bombed == true
     self.neighbors.each do |tile|
-      if tile.neighbors_bomb_count == 0 && tile.revealed == false
+      if tile.bombed == false && tile.revealed == false
         tile.reveal
       end
     end

@@ -38,7 +38,7 @@ class MinesweeperGame
   end
 
   def win?
-    all_bomb_tile.all? { |ele| ele.revealed == true }
+    all_bomb_tile.all? { |ele| ele.flagged == true }
   end
 
   def lose?
@@ -105,3 +105,6 @@ class MinesweeperGame
     pos.none? { |ele| alphabet.include?(ele) }
   end
 end
+
+game = MinesweeperGame.new(2)
+game.run
